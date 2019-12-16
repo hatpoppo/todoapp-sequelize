@@ -14,7 +14,7 @@ export const TodoFooter = (props: TodoFooterProps) => {
   return (
     <footer>
       <span>
-        {itemCount} imte {itemCount <= 1 ? "" : "s"}
+        {itemCount} item{itemCount <= 1 ? "" : "s"}
       </span>
       <button onClick={_onclick} className="submit">
         Clear Button

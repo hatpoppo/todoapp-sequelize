@@ -31,6 +31,9 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
         newTodos[id] = todos[id];
       }
     });
+    this.setState({
+      todos: newTodos
+    });
   };
   private _addTodo = label => {
     const { todos } = this.state;
