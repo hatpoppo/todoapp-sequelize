@@ -1,6 +1,7 @@
 import React from "react";
 import { TodoHeader } from "./components/TodoHeader";
 import { TodoFooter } from "./components/TodoFooter";
+import { TodoList } from "./components/TodoList";
 import { FileTypes, Todos } from "./TodoApp.types";
 let index = 0;
 
@@ -16,7 +17,8 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
     const { filter, todos } = this.state;
     return (
       <div>
-        <TodoHeader addTodo={this._addTodo} setFilter={this._filter} filter="all"></TodoHeader>
+        <TodoHeader addTodo={this._addTodo} setFilter={this._filter} filter={filter}></TodoHeader>
+        <TodoList todos={todos} filter={filter} complete={this._complete}></TodoList>
         <TodoFooter clear={this._clear} todos={todos}></TodoFooter>
       </div>
     );
@@ -40,6 +42,14 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
   private _filter = filter => {
     this.setState({
       filter: filter
+    });
+  };
+  private _complete = id => {
+    const { todos } = this.state;
+    const todo = todos[id];
+    const newTodos = { ...todos, [id]: { ...todo, completed: !todo.completed } };
+    this.setState({
+      todos: newTodos
     });
   };
 }
