@@ -37,5 +37,9 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
       todos: { ...todos, [id]: { label, completed: false } }
     });
   };
-  private _filter = () => {};
+  private _filter = filter => {
+    this.setState({
+      filter: filter
+    });
+  };
 }

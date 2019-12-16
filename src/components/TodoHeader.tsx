@@ -32,8 +32,12 @@ export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState
           <button onClick={this._onFilter} className={filter === "all" ? "selected" : ""}>
             all
           </button>
-          <button className={filter === "active" ? "selected" : ""}>active</button>
-          <button className={filter === "completed" ? "selected" : ""}>completed</button>
+          <button onClick={this._onFilter} className={filter === "active" ? "selected" : ""}>
+            active
+          </button>
+          <button onClick={this._onFilter} className={filter === "completed" ? "selected" : ""}>
+            completed
+          </button>
         </nav>
       </header>
     );
@@ -44,7 +48,7 @@ export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState
   _onChange = evt => {
     this.setState({ labelInput: evt.target.value });
   };
-  _onAdd = evt => {
+  _onAdd = () => {
     this.props.addTodo(this.state.labelInput);
     this.setState({ labelInput: "" });
   };
