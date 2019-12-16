@@ -23,8 +23,10 @@ export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState
       <header>
         <h1>todos</h1>
         <div className="addTodo">
-          <input value={this.state.labelInput} className="textfiled" placeholder="add todo"></input>
-          <button>Add</button>
+          <input value={this.state.labelInput} onChange={this._onChange} className="textfiled" placeholder="add todo"></input>
+          <button onClick={this._onAdd} className="submit">
+            Add
+          </button>
         </div>
         <nav className="filter">
           <button onClick={this._onFilter} className={filter === "all" ? "selected" : ""}>
@@ -41,5 +43,9 @@ export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState
   };
   _onChange = evt => {
     this.setState({ labelInput: evt.target.value });
+  };
+  _onAdd = evt => {
+    this.props.addTodo(this.state.labelInput);
+    this.setState({ labelInput: "" });
   };
 }
