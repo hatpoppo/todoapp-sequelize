@@ -20,7 +20,7 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
       <Stack horizontalAlign="center">
         <Stack style={{ width: 400 }} gap={25}>
           <TodoHeader addTodo={this._addTodo} setFilter={this._filter} filter={filter}></TodoHeader>
-          <TodoList todos={todos} filter={filter} complete={this._complete}></TodoList>
+          <TodoList todos={todos} filter={filter} complete={this._complete} edit={this._edit} remove={this._remove}></TodoList>
           <TodoFooter clear={this._clear} todos={todos}></TodoFooter>
         </Stack>
       </Stack>
@@ -54,6 +54,20 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
     const { todos } = this.state;
     const todo = todos[id];
     const newTodos = { ...todos, [id]: { ...todo, completed: !todo.completed } };
+    this.setState({
+      todos: newTodos
+    });
+  };
+  private _edit = (id, label) => {
+    const newTodos = { ...this.state.todos };
+    newTodos[id] = { ...newTodos[id], label };
+    this.setState({
+      todos: newTodos
+    });
+  };
+  private _remove = id => {
+    const newTodos = { ...this.state.todos };
+    delete newTodos[id];
     this.setState({
       todos: newTodos
     });
