@@ -3,6 +3,7 @@ import { TodoHeader } from "./components/TodoHeader";
 import { TodoFooter } from "./components/TodoFooter";
 import { TodoList } from "./components/TodoList";
 import { FileTypes, Todos } from "./TodoApp.types";
+import { Stack } from "office-ui-fabric-react";
 let index = 0;
 
 export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTypes }> {
@@ -16,11 +17,13 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
   render() {
     const { filter, todos } = this.state;
     return (
-      <div>
-        <TodoHeader addTodo={this._addTodo} setFilter={this._filter} filter={filter}></TodoHeader>
-        <TodoList todos={todos} filter={filter} complete={this._complete}></TodoList>
-        <TodoFooter clear={this._clear} todos={todos}></TodoFooter>
-      </div>
+      <Stack horizontalAlign="center">
+        <Stack style={{ width: 400 }} gap={25}>
+          <TodoHeader addTodo={this._addTodo} setFilter={this._filter} filter={filter}></TodoHeader>
+          <TodoList todos={todos} filter={filter} complete={this._complete}></TodoList>
+          <TodoFooter clear={this._clear} todos={todos}></TodoFooter>
+        </Stack>
+      </Stack>
     );
   }
   private _clear = () => {

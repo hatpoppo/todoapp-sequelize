@@ -1,5 +1,6 @@
 import React from "react";
 import { Todos } from "../TodoApp.types";
+import { DefaultButton, Stack, Text } from "office-ui-fabric-react";
 
 interface TodoFooterProps {
   clear: () => void;
@@ -12,13 +13,11 @@ export const TodoFooter = (props: TodoFooterProps) => {
     props.clear();
   };
   return (
-    <footer>
-      <span>
+    <Stack horizontal horizontalAlign="space-between">
+      <Text>
         {itemCount} item{itemCount <= 1 ? "" : "s"}
-      </span>
-      <button onClick={_onclick} className="submit">
-        Clear Button
-      </button>
-    </footer>
+      </Text>
+      <DefaultButton onClick={_onclick}>Clear DefaultButton</DefaultButton>
+    </Stack>
   );
 };

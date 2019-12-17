@@ -1,6 +1,6 @@
 import React from "react";
 import { FileTypes } from "../TodoApp.types";
-
+import { Stack, Text, Pivot, PivotItem, TextField, PrimaryButton } from "office-ui-fabric-react";
 interface TodoHeaderProps {
   addTodo: (label: string) => void;
   setFilter: (filter: FileTypes) => void;
@@ -20,30 +20,28 @@ export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState
   render() {
     const { filter, setFilter } = this.props;
     return (
-      <header>
-        <h1>todos</h1>
-        <div className="addTodo">
-          <input value={this.state.labelInput} onChange={this._onChange} className="textfiled" placeholder="add todo"></input>
-          <button onClick={this._onAdd} className="submit">
-            Add
-          </button>
-        </div>
-        <nav className="filter">
-          <button onClick={this._onFilter} className={filter === "all" ? "selected" : ""}>
-            all
-          </button>
-          <button onClick={this._onFilter} className={filter === "active" ? "selected" : ""}>
-            active
-          </button>
-          <button onClick={this._onFilter} className={filter === "completed" ? "selected" : ""}>
-            completed
-          </button>
-        </nav>
-      </header>
+      <Stack>
+        <Stack>
+          <Text variant="xxLarge">
+            todos <Text variant="mediumPlus">use ui-fablic</Text>{" "}
+          </Text>
+        </Stack>
+        <Stack horizontal>
+          <Stack.Item grow>
+            <TextField value={this.state.labelInput} onChange={this._onChange} placeholder="add todo"></TextField>
+          </Stack.Item>
+          <PrimaryButton onClick={this._onAdd}>Add</PrimaryButton>
+        </Stack>
+        <Pivot onLinkClick={this._onFilter}>
+          <PivotItem headerText="all" />
+          <PivotItem headerText="active" />
+          <PivotItem headerText="completed" />
+        </Pivot>
+      </Stack>
     );
   }
-  _onFilter = evt => {
-    this.props.setFilter(evt.target.innerText);
+  _onFilter = item => {
+    this.props.setFilter(item.props.headerText as FileTypes);
   };
   _onChange = evt => {
     this.setState({ labelInput: evt.target.value });

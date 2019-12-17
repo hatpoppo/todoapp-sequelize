@@ -1,7 +1,7 @@
 import React from "react";
 import { TodoListItem } from "./TodoListItem";
 import { FileTypes, Todos } from "../TodoApp.types";
-
+import { Stack } from "office-ui-fabric-react";
 interface TodoListProps {
   todos: Todos;
   filter: FileTypes;
@@ -15,11 +15,11 @@ export class TodoList extends React.Component<TodoListProps, any> {
       return filter === "all" || (filter === "completed" && todos[id].completed) || (filter === "active" && !todos[id].completed);
     });
     return (
-      <ul className="todos">
+      <Stack gap={10}>
         {filterdTodos.map(id => (
           <TodoListItem key={id} id={id} complete={complete} {...todos[id]}></TodoListItem>
         ))}
-      </ul>
+      </Stack>
     );
   }
 }
