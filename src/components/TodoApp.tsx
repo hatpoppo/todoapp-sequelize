@@ -1,8 +1,8 @@
 import React from "react";
-import { TodoHeader } from "./components/TodoHeader";
-import { TodoFooter } from "./components/TodoFooter";
-import { TodoList } from "./components/TodoList";
-import { FileTypes, Todos } from "./TodoApp.types";
+import { TodoHeader } from "./TodoHeader";
+import { TodoFooter } from "./TodoFooter";
+import { TodoList } from "./TodoList";
+import { FileTypes, Todos } from "../TodoApp.types";
 import { Stack } from "office-ui-fabric-react";
 let index = 0;
 

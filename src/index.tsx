@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { TodoApp } from "./TodoApp";
+import { TodoApp } from "./components/TodoApp";
 import { initializeIcons } from "@uifabric/icons";
 import * as serviceWorker from "./serviceWorker";
 
