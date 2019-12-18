@@ -1,16 +1,13 @@
-import React from "react";
-import { Todos } from "../TodoApp.types";
+import React, { useContext } from "react";
 import { DefaultButton, Stack, Text } from "office-ui-fabric-react";
+import { TodoContext } from "../TodoContext";
 
-interface TodoFooterProps {
-  clear: () => void;
-  todos: Todos;
-}
-
-export const TodoFooter = (props: TodoFooterProps) => {
-  const itemCount = Object.keys(props.todos).filter(id => !props.todos[id].completed).length;
+export const TodoFooter = () => {
+  const context = useContext(TodoContext);
+  const todos = context.todos;
+  const itemCount = Object.keys(todos).filter(id => !todos[id].completed).length;
   const _onclick = () => {
-    props.clear();
+    context.clear();
   };
   return (
     <Stack horizontal horizontalAlign="space-between">

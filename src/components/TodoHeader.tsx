@@ -1,24 +1,19 @@
 import React from "react";
 import { FileTypes } from "../TodoApp.types";
 import { Stack, Text, Pivot, PivotItem, TextField, PrimaryButton } from "office-ui-fabric-react";
-interface TodoHeaderProps {
-  addTodo: (label: string) => void;
-  setFilter: (filter: FileTypes) => void;
-  filter: FileTypes;
-}
+import { TodoContext } from "../TodoContext";
 
 interface TodoHeaderState {
   labelInput: string;
 }
 
-export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState> {
-  constructor(props: TodoHeaderProps) {
+export class TodoHeader extends React.Component<{}, TodoHeaderState> {
+  constructor(props) {
     super(props);
     this.state = { labelInput: "" };
   }
 
   render() {
-    const { filter, setFilter } = this.props;
     return (
       <Stack>
         <Stack>
@@ -41,13 +36,14 @@ export class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState
     );
   }
   _onFilter = item => {
-    this.props.setFilter(item.props.headerText as FileTypes);
+    this.context.setFilter(item.props.headerText as FileTypes);
   };
   _onChange = evt => {
     this.setState({ labelInput: evt.target.value });
   };
   _onAdd = () => {
-    this.props.addTodo(this.state.labelInput);
+    this.context.addTodo(this.state.labelInput);
     this.setState({ labelInput: "" });
   };
 }
+TodoHeader.contextType = TodoContext;

@@ -4,10 +4,11 @@ import { TodoFooter } from "./TodoFooter";
 import { TodoList } from "./TodoList";
 import { FileTypes, Todos } from "../TodoApp.types";
 import { Stack } from "office-ui-fabric-react";
+import { TodoContext } from "../TodoContext";
 let index = 0;
 
-export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTypes }> {
-  constructor(props: {}) {
+export class TodoApp extends React.Component<any, { todos: Todos; filter: FileTypes }> {
+  constructor(props) {
     super(props);
     this.state = {
       todos: {},
@@ -17,13 +18,24 @@ export class TodoApp extends React.Component<{}, { todos: Todos; filter: FileTyp
   render() {
     const { filter, todos } = this.state;
     return (
-      <Stack horizontalAlign="center">
-        <Stack style={{ width: 400 }} gap={25}>
-          <TodoHeader addTodo={this._addTodo} setFilter={this._filter} filter={filter}></TodoHeader>
-          <TodoList todos={todos} filter={filter} complete={this._complete} edit={this._edit} remove={this._remove}></TodoList>
-          <TodoFooter clear={this._clear} todos={todos}></TodoFooter>
+      <TodoContext.Provider
+        value={{
+          ...this.state,
+          addTodo: this._addTodo,
+          remove: this._remove,
+          complete: this._complete,
+          clear: this._clear,
+          edit: this._edit
+        }}
+      >
+        <Stack horizontalAlign="center">
+          <Stack style={{ width: 400 }} gap={25}>
+            <TodoHeader />
+            <TodoList />
+            <TodoFooter />
+          </Stack>
         </Stack>
-      </Stack>
+      </TodoContext.Provider>
     );
   }
   private _clear = () => {

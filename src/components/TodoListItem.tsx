@@ -1,12 +1,8 @@
 import React from "react";
-import { TodoItem, Todos } from "../TodoApp.types";
 import { Stack, Checkbox, DefaultButton, IconButton, TextField } from "office-ui-fabric-react";
+import { TodoContext } from "../TodoContext";
 interface TodoListItemProps {
   id: string;
-  todos: Todos;
-  complete: (id: string) => void;
-  edit: (id: string, label: string) => void;
-  remove: (id: string) => void;
 }
 
 interface TodoListItemState {
@@ -19,7 +15,8 @@ export class TodoListItem extends React.Component<TodoListItemProps, TodoListIte
     this.state = { editing: false, editLabel: "" };
   }
   render() {
-    const { id, todos, complete, remove } = this.props;
+    const { id } = this.props;
+    const { todos, complete, remove } = this.context;
     return (
       <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
         {!this.state.editing && (
@@ -50,7 +47,8 @@ export class TodoListItem extends React.Component<TodoListItemProps, TodoListIte
     });
   };
   private onEdit = () => {
-    const { todos, id } = this.props;
+    const { id } = this.props;
+    const { todos } = this.context;
     const { label } = todos[id];
     this.setState({
       editLabel: label,
@@ -58,10 +56,12 @@ export class TodoListItem extends React.Component<TodoListItemProps, TodoListIte
     });
   };
   private onEditDone = () => {
-    this.props.edit(this.props.id, this.state.editLabel);
+    this.context.edit(this.props.id, this.state.editLabel);
     this.setState({
       editing: false,
       editLabel: ""
     });
   };
 }
+
+TodoListItem.contextType = TodoContext;
