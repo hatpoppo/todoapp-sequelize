@@ -1,13 +1,18 @@
 import React from "react";
-import { FileTypes } from "../TodoApp.types";
 import { Stack, Text, Pivot, PivotItem, TextField, PrimaryButton } from "office-ui-fabric-react";
-import { TodoContext } from "../TodoContext";
+import { FilterTypes } from "../store";
+import { actions } from "../actions";
+import { connect } from "react-redux";
 
+interface TodoHeaderProps {
+  addTodo: (label: string) => void;
+  setFilter: (filter: FilterTypes) => void;
+}
 interface TodoHeaderState {
   labelInput: string;
 }
 
-export class TodoHeader extends React.Component<{}, TodoHeaderState> {
+class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState> {
   constructor(props) {
     super(props);
     this.state = { labelInput: "" };
@@ -36,14 +41,22 @@ export class TodoHeader extends React.Component<{}, TodoHeaderState> {
     );
   }
   _onFilter = item => {
-    this.context.setFilter(item.props.headerText as FileTypes);
+    this.props.setFilter(item.props.headerText as FilterTypes);
   };
   _onChange = evt => {
     this.setState({ labelInput: evt.target.value });
   };
   _onAdd = () => {
-    this.context.addTodo(this.state.labelInput);
+    this.props.addTodo(this.state.labelInput);
     this.setState({ labelInput: "" });
   };
 }
-TodoHeader.contextType = TodoContext;
+const TodoHeaderConnect = connect(
+  state => ({}),
+  dispatch => ({
+    addTodo: label => dispatch(actions.addTodo(label)),
+    setFilter: filter => dispatch(actions.setFilter(filter))
+  })
+)(TodoHeader);
+
+export { TodoHeaderConnect as TodoHeader };

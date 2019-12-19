@@ -1,22 +1,28 @@
 import React from "react";
 import { Stack, Checkbox, DefaultButton, IconButton, TextField } from "office-ui-fabric-react";
-import { TodoContext } from "../TodoContext";
+import { actions } from "../actions";
+import { Store } from "../store";
+import { connect } from "react-redux";
+
 interface TodoListItemProps {
   id: string;
+  todos: Store["todos"];
+  complete: (id: string) => void;
+  edit: (id: string, label) => void;
+  remove: (id: string) => void;
 }
 
 interface TodoListItemState {
   editing: boolean;
   editLabel: string;
 }
-export class TodoListItem extends React.Component<TodoListItemProps, TodoListItemState> {
+class TodoListItem extends React.Component<TodoListItemProps, TodoListItemState> {
   constructor(props) {
     super(props);
     this.state = { editing: false, editLabel: "" };
   }
   render() {
-    const { id } = this.props;
-    const { todos, complete, remove } = this.context;
+    const { id, todos, complete, remove } = this.props;
     return (
       <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
         {!this.state.editing && (
@@ -47,8 +53,7 @@ export class TodoListItem extends React.Component<TodoListItemProps, TodoListIte
     });
   };
   private onEdit = () => {
-    const { id } = this.props;
-    const { todos } = this.context;
+    const { id, todos } = this.props;
     const { label } = todos[id];
     this.setState({
       editLabel: label,
@@ -56,7 +61,7 @@ export class TodoListItem extends React.Component<TodoListItemProps, TodoListIte
     });
   };
   private onEditDone = () => {
-    this.context.edit(this.props.id, this.state.editLabel);
+    this.props.edit(this.props.id, this.state.editLabel);
     this.setState({
       editing: false,
       editLabel: ""
@@ -64,4 +69,13 @@ export class TodoListItem extends React.Component<TodoListItemProps, TodoListIte
   };
 }
 
-TodoListItem.contextType = TodoContext;
+const ConnectedTodoListItem = connect(
+  (state: Store) => ({ todos: state.todos }),
+  dispatch => ({
+    edit: (id: string, label: string) => dispatch(actions.edit(id, label)),
+    remove: (id: string) => dispatch(actions.remove(id)),
+    complete: (id: string) => dispatch(actions.complete(id))
+  })
+)(TodoListItem);
+
+export { ConnectedTodoListItem as TodoListItem };
