@@ -1,7 +1,6 @@
 import { Store } from "../store";
 import { combineReducers } from "redux";
 import { createReducer } from "redux-starter-kit";
-import { create } from "domain";
 
 export const todoReducer = createReducer<Store["todos"]>(
   {},

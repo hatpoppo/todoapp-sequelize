@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, Checkbox, DefaultButton, IconButton, TextField } from "office-ui-fabric-react";
-import { actions } from "../actions";
+import { actionsWithService } from "../actions";
 import { Store } from "../store";
 import { connect } from "react-redux";
 
@@ -71,10 +71,10 @@ class TodoListItem extends React.Component<TodoListItemProps, TodoListItemState>
 
 const ConnectedTodoListItem = connect(
   (state: Store) => ({ todos: state.todos }),
-  dispatch => ({
-    edit: (id: string, label: string) => dispatch(actions.edit(id, label)),
-    remove: (id: string) => dispatch(actions.remove(id)),
-    complete: (id: string) => dispatch(actions.complete(id))
+  (dispatch: any) => ({
+    edit: (id: string, label: string) => dispatch(actionsWithService.edit(id, label)),
+    remove: (id: string) => dispatch(actionsWithService.remove(id)),
+    complete: (id: string) => dispatch(actionsWithService.complete(id))
   })
 )(TodoListItem);
 

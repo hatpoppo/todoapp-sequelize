@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack, Text, Pivot, PivotItem, TextField, PrimaryButton } from "office-ui-fabric-react";
 import { FilterTypes } from "../store";
-import { actions } from "../actions";
+import { actions, actionsWithService } from "../actions";
 import { connect } from "react-redux";
 
 interface TodoHeaderProps {
@@ -53,8 +53,8 @@ class TodoHeader extends React.Component<TodoHeaderProps, TodoHeaderState> {
 }
 const TodoHeaderConnect = connect(
   state => ({}),
-  dispatch => ({
-    addTodo: label => dispatch(actions.addTodo(label)),
+  (dispatch: any) => ({
+    addTodo: label => dispatch(actionsWithService.addTodo(label)),
     setFilter: filter => dispatch(actions.setFilter(filter))
   })
 )(TodoHeader);

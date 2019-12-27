@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { DefaultButton, Stack, Text } from "office-ui-fabric-react";
-import { actions } from "../actions";
+import { actionsWithService } from "../actions";
 import { connect } from "react-redux";
 import { Store } from "../store";
 interface TodoFooterProps {
@@ -24,8 +24,8 @@ const ConnectedTodoFooter = connect(
   (state: Store) => ({
     todos: state.todos
   }),
-  dispatch => ({
-    clear: () => dispatch(actions.clear())
+  (dispatch: any) => ({
+    clear: () => dispatch(actionsWithService.clear())
   })
 )(TodoFooter);
 
