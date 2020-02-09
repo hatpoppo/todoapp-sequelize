@@ -65,8 +65,7 @@ app.get("/hello", (req, res) => {
 });
 
 models.sequelize.sync().then(() => {
-  app.listen(4000),
-    () => {
-      console.log("Listening as http://localhost:4000");
-    };
+  app.listen(4000, () => {
+    console.log("Listening as http://localhost:4000");
+  });
 });
